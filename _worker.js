@@ -6,7 +6,7 @@ const fetchGravatar = async (pathname) => {
   const url = `https://www.gravatar.com/avatar/${email}`;
   const response = await fetch(url);
   // return await fetch(url);
-  return new Response(response.statusText);
+  return new Response(response.url);
 }
 
 export default {
