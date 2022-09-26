@@ -4,7 +4,9 @@ const GravatarPrefix = "/avatar/";
 const fetchGravatar = async (pathname) => {
   const email = pathname.replace(GravatarPrefix, "");
   const url = `https://www.gravatar.com/avatar/${email}`;
-  return await fetch(url);
+  const response = await fetch(url);
+  // return await fetch(url);
+  return new Response(response.statusText);
 }
 
 export default {
