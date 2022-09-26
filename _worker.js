@@ -1,21 +1,39 @@
 const UrlShortenKV = "UrlShorten";
 const GravatarPrefix = "/avatar/";
 
-const fetchGravatar = async (pathname) => {
-  const path = pathname.replace(GravatarPrefix, "");
+/**
+ * Fetch Gravatar image with cache.
+ * @param {Request} request Origin request
+ * @param {{waitUntil: (f: any) => void}} context CloudFlare Worker Context
+ * @returns {Response} Gravatar Response
+ */
+const fetchGravatar = async (request, context) => {
+  const path = new URL(request.url).pathname.replace(GravatarPrefix, "") + new URL(request.url).search;
   const url = `https://www.gravatar.com/avatar/${path}`;
-  const response = await fetch(url);
+
+  // https://developers.cloudflare.com/workers/examples/cache-api/
+  const cacheKey = new Request(request.url, request);
+  const cache = caches.default;
+
+  let response = await cache.match(cacheKey);
+  if (!response) {
+    response = await fetch(url);
+    response = new Response(response.body, response);
+    response.headers.append("Cache-Control", "s-maxage=86400");
+    context.waitUntil(cache.put(cacheKey, response.clone()));
+  }
+
   return response;
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, context) {
     const url = new URL(request.url);
     const value = await env[UrlShortenKV].get(url.pathname);
 
     if (value === null) {
       if (url.pathname.startsWith(GravatarPrefix)) {
-        return await fetchGravatar(`${url.pathname}${url.search}`);
+        return await fetchGravatar(request, context);
       }
 
       return new Response("URL not found", { status: 404 });
