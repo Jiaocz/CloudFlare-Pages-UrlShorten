@@ -1,7 +1,9 @@
+const UrlShortenKV = "UrlShorten";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const value = await env.UrlShorten.get(url.pathname);
+    const value = await env[UrlShortenKV].get(url.pathname);
 
     if (value === null) {
       return new Response("URL not found", { status: 404 });
