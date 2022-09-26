@@ -19,7 +19,7 @@ const fetchGravatar = async (request, context) => {
   if (!response) {
     response = await fetch(url);
     response = new Response(response.body, response);
-    response.headers.append("Cache-Control", "s-maxage=86400");
+    response.headers.append("Cache-Control", "max-age=86400, s-maxage=86400");
     context.waitUntil(cache.put(cacheKey, response.clone()));
   }
 
