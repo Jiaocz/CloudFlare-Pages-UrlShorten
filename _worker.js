@@ -2,11 +2,10 @@ const UrlShortenKV = "UrlShorten";
 const GravatarPrefix = "/avatar/";
 
 const fetchGravatar = async (pathname) => {
-  const email = pathname.replace(GravatarPrefix, "");
-  const url = `https://www.gravatar.com/avatar/${email}`;
+  const path = pathname.replace(GravatarPrefix, "");
+  const url = `https://www.gravatar.com/avatar/${path}`;
   const response = await fetch(url);
-  // return await fetch(url);
-  return new Response(response.url);
+  return response;
 }
 
 export default {
@@ -16,7 +15,7 @@ export default {
 
     if (value === null) {
       if (url.pathname.startsWith(GravatarPrefix)) {
-        return await fetchGravatar(url.pathname);
+        return await fetchGravatar(`${url.pathname}${url.search}`);
       }
 
       return new Response("URL not found", { status: 404 });
