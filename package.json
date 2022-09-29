@@ -1,0 +1,28 @@
+{
+  "name": "cloudflare-pages-urlshorten",
+  "version": "1.0.0",
+  "description": "A URL Shortener based on Cloudflare Pages",
+  "author": {
+    "name": "Orangii|橙梓",
+    "email": "me@orangii.cn",
+    "url": "https://orangii.cn/"
+  },
+  "scripts": {
+    "test": "wrangler pages dev ./dist --kv UrlShorten",
+    "watch": "postcss css/style.css -o dist/style.css --watch",
+    "build": "postcss css/style.css -o dist/style.css"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "md5": "^2.3.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.16.0",
+    "@types/md5": "^2.3.2",
+    "autoprefixer": "^10.4.12",
+    "postcss-cli": "^10.0.0",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.8.4",
+    "wrangler": "^2.1.8"
+  }
+}
