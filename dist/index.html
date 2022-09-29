@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
     <title>多功能URL短链工具</title>
+    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-3-M/axios/0.26.0/axios.min.js" defer="defer"></script>
 </head>
 <body class="w-full bg-gray-100">
     <header class="w-full mt-36 mb-10 text-center" id="site-header">
@@ -17,10 +18,54 @@
     <section class="w-max bg-red-100 mx-auto py-3 px-6 rounded-lg text-gray-700 my-16 font-thin">
         <p class="tracking-wide"><strong class="font-bold">提示：</strong>如果你没有刻意访问本页面，那么你很可能是访问了错误的URL，来到了默认的首页。</p>
     </section>
-    <main class="w-5/6 bg-white rounded-xl mt-28 mx-auto p-10 shadow-lg">
+    <main class="w-5/6 bg-white rounded-xl mt-28 mb-20 mx-auto p-10 shadow-lg">
         <section id="gravatar-mirror">
-            <h2 class="tracking-wider font-bold text-2xl">Gravatar 镜像</h2>
+            <h2 class="title-2">Gravatar 镜像</h2>
+            <p class="text-gray-600">
+                使用 <code>本站域名</code> 替换 <code>https://www.gravatar.com/</code> 即可，其他参数均可保留。
+            </p>
+
+            <section class="mx-auto rounded-xl shadow-md p-10 mt-6 flex flex-row w-1/2">
+                <img
+                    src="/avatar/02e96d02a7364a53f44168f4beb7067c?s=128&d=https%3A%2F%2Fstatic.orangii.cn%2Favatar%2Fanime%2F5.jpg&r=pg"
+                    alt="Gravatar"
+                    class="rounded-full w-26 h-26 mr-6"
+                    id="gravatar-mirror-img"
+                />
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold mb-4">头像预览</h3>
+                    <p>
+                        <span>邮箱：</span>
+                        <input
+                            value="me@orangii.cn"
+                            placeholder="请输入邮箱，如 me@orangii.cn"
+                            type="email"
+                            class="w-80 border-b-2 border-b-gray-600 active:ring-2 active:ring-orange-600 active:border-none mb-4"
+                            id="avatar-email"
+                        />
+                    </p>
+                    <p class="text-gray-400 overflow-hidden whitespace-nowrap text-ellipsis w-80">
+                        镜像地址：
+                        <span id="gravatar-img-link" class="border-b-2 border-dashed cursor-pointer hover:border-b-orange-200 hover:text-orange-200 transition-all">
+                            请输入邮箱后查看
+                        </span>
+                    </p>
+                </div>
+            </section>
         </section>
     </main>
+    <script>
+        // 头像
+        const emailChangedHandler = async () => {
+            const origin = window.location.origin;
+            const email = document.getElementById('avatar-email').value;
+            const img = document.getElementById('gravatar-mirror-img');
+            const url = document.getElementById('gravatar-img-link');
+            const hash = await axios.get(`/api/md5/${email}`);
+            img.src = `${origin}/avatar/${hash.data}?s=128`;
+            url.innerText = `${origin}/avatar/${hash.data}?s=128`;
+        }
+        document.getElementById('avatar-email').addEventListener('blur', emailChangedHandler);
+    </script>
 </body>
 </html>

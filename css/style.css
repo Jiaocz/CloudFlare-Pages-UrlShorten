@@ -18,3 +18,11 @@
     background-size: 200%;
     animation: 2.5s linear 0s infinite normal none running rainbow-flow;;
 }
+
+code {
+    @apply bg-gray-300 rounded text-gray-800 px-1 py-0.5;
+}
+
+.title-2 {
+    @apply tracking-wider font-bold text-2xl mb-4;
+}
