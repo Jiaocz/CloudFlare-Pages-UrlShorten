@@ -10,62 +10,138 @@
 </head>
 <body class="w-full bg-gray-100">
     <header class="w-full mt-36 mb-10 text-center" id="site-header">
-        <h1 class="text-8xl tracking-widest font-bold">
+        <h1 class="tracking-widest font-bold sm:text-5xl sm:tracking-wider lg:text-7xl lg:tracking-widest xl:text-8xl">
             一个<span class="rainbow border-b-4 border-b-orange-200">多功能</span>的URL短链工具
         </h1>
-        <p class="text-xl mt-6 tracking-wider">无跟踪 / 基于 Cloudflare Pages / 多种功能</p>
+        <p class="mt-6 tracking-wider sm:text-lg lg:text-xl xl:text-2xl">无跟踪 / 基于 Cloudflare Pages / 多种功能</p>
     </header>
-    <section class="w-max bg-red-100 mx-auto py-3 px-6 rounded-lg text-gray-700 my-16 font-thin">
-        <p class="tracking-wide"><strong class="font-bold">提示：</strong>如果你没有刻意访问本页面，那么你很可能是访问了错误的URL，来到了默认的首页。</p>
+    <section class="w-max max-w-full bg-red-100 mx-auto py-3 px-6 rounded-lg text-gray-700 my-16 font-thin">
+        <p class="tracking-wide sm:text-xs lg:text-lg"><strong class="font-bold">提示：</strong>如果你没有刻意访问本页面，那么你很可能是访问了错误的URL，来到了默认的首页。</p>
     </section>
-    <main class="w-5/6 bg-white rounded-xl mt-28 mb-20 mx-auto p-10 shadow-lg">
-        <section id="gravatar-mirror">
+    <main class="w-5/6 bg-white rounded-xl mt-28 mb-10 mx-auto p-10 shadow-lg">
+        <section id="gravatar-mirror" class="mb-16">
             <h2 class="title-2">Gravatar 镜像</h2>
             <p class="text-gray-600">
-                使用 <code>本站域名</code> 替换 <code>https://www.gravatar.com/</code> 即可，其他参数均可保留。
+                使用 <code id="this-site-gravatar-origin">本站域名/avatar</code> 替换 <code>https://www.gravatar.com/avatar/</code> 即可，其他参数均可保留。
             </p>
 
-            <section class="mx-auto rounded-xl shadow-md p-10 mt-6 flex flex-row w-1/2">
+            <section class="card flex lg:flex-row sm:flex-col">
                 <img
-                    src="/avatar/02e96d02a7364a53f44168f4beb7067c?s=128&d=https%3A%2F%2Fstatic.orangii.cn%2Favatar%2Fanime%2F5.jpg&r=pg"
+                    src="/avatar/02e96d02a7364a53f44168f4beb7067c?s=128"
                     alt="Gravatar"
-                    class="rounded-full w-26 h-26 mr-6"
+                    class="rounded-full w-20 h-20 mr-6 flex-none sm:mb-4"
                     id="gravatar-mirror-img"
                 />
-                <div class="flex-1">
+                <div class="flex-1 flex flex-col">
                     <h3 class="text-lg font-bold mb-4">头像预览</h3>
-                    <p>
+                    <p class="sm:w-full">
                         <span>邮箱：</span>
                         <input
                             value="me@orangii.cn"
-                            placeholder="请输入邮箱，如 me@orangii.cn"
+                            placeholder="请输入邮箱"
                             type="email"
-                            class="w-80 border-b-2 border-b-gray-600 active:ring-2 active:ring-orange-600 active:border-none mb-4"
+                            class="sm:w-2/3 lg:w-[300px] border-b-2 focus:border-0 focus:ring-2 focus:rounded box-border ring-orange-400 outline-0 border-b-gray-300 active:ring-2 mb-4"
                             id="avatar-email"
                         />
                     </p>
-                    <p class="text-gray-400 overflow-hidden whitespace-nowrap text-ellipsis w-80">
+                    <p class="text-gray-400 overflow-hidden whitespace-nowrap text-ellipsis sm:w-full lg:w-[350px]">
                         镜像地址：
-                        <span id="gravatar-img-link" class="border-b-2 border-dashed cursor-pointer hover:border-b-orange-200 hover:text-orange-200 transition-all">
+                        <a
+                            id="gravatar-img-link"
+                            href="javascript:void(0);"
+                            target="_blank"
+                            class="border-b-2 border-dashed cursor-pointer hover:border-b-orange-200 hover:text-orange-200 transition-all"
+                        >
                             请输入邮箱后查看
+                        </a>
                         </span>
                     </p>
                 </div>
             </section>
         </section>
+
+        <section id="gh-static-mirror" class="mb-16">
+            <h2 class="title-2">GitHub 静态文件镜像</h2>
+            <p class="text-gray-600">
+                将资源地址粘贴倒 <code id="this-site-gh-origin">本站域名/gh/</code> 后打开即可使用。
+            </p>
+            
+            <section class="card">
+                <h3 class="text-xl font-bold mb-4">输入链接体验效果体验</h3>
+                <div class="flex flex-row gap-2 lg:mb-2 sm:mb-3">
+                    <input
+                        id="gh-mirror-input"
+                        class="box-border w-full border-b-2 border-b-gray-300 focus:border-0 focus:rounded focus:ring-2 ring-orange-400 outline-0"
+                        placeholder="https://github.com/Jiaocz/CloudFlare-Pages-UrlShorten/blob/main/README.md"
+                    />
+                    <button
+                        id="gh-mirror-btn"
+                        class="bg-orange-300 hover:bg-orange-500 transition-colors hover:shadow-inner active:ring-2 ring-orange-500 text-white rounded-full py-1.5 px-2.5"
+                    >
+                        →
+                    </button>
+                </div>
+                <p class="text-gray-400">
+                    * 支持 raw content, release 等，更多详情请查看 
+                    <a
+                        class="border-b-2 border-dashed"
+                        href="https://github.com/hunshcn/gh-proxy"
+                        rel="noopener nofollow noreferer"
+                        target="_blank"
+                    >
+                        hunshcn/gh-proxy
+                    </a>
+                </p> 
+            </section>
+        </section>
+
+        <section id="url-shortener">
+            <h2 class="title-2">短链服务</h2>
+            <p class="text-gray-600">
+                如果你知道一个缩短后的链接，那么直接打开就好。如果不知道的话可以点击下面的链接体验~
+            </p>
+            
+            <section class="card bg-orange-50">
+                <span class="mx-auto text-center block text-4xl font-bold tracking-wide hover:scale-125 hover:-rotate-1 transition-transform rainbow">
+                    <a href="/credits" rel="noopener noreferrer">/credits</a>
+                </span>
+            </section>
+        </section>
     </main>
+    <footer class="mb-10 text-gray-400 text-center sm:text-xs lg:text-base">
+        Copyright &copy; 2022 <a href="https://orangii.cn" rel="noopener noreferrer">Orangii</a> 
+        | <a href="https://github.com/Jiaocz/CloudFlare-Pages-UrlShorten" target="_blank" rel="noopener noreferrer">Jiaocz/CloudFlare-Pages-UrlShorten</a>
+    </footer>
     <script>
+        // Gravatar 镜像
+        document.getElementById('this-site-gravatar-origin').innerText = `${window.location.origin}/avatar/`;
         // 头像
+        document.getElementById('gravatar-img-link').innerText
+          = document.getElementById('gravatar-img-link').href
+          = `${window.location.origin}/avatar/02e96d02a7364a53f44168f4beb7067c?s=128`;
         const emailChangedHandler = async () => {
             const origin = window.location.origin;
             const email = document.getElementById('avatar-email').value;
+            if (!email) return;
             const img = document.getElementById('gravatar-mirror-img');
             const url = document.getElementById('gravatar-img-link');
             const hash = await axios.get(`/api/md5/${email}`);
             img.src = `${origin}/avatar/${hash.data}?s=128`;
-            url.innerText = `${origin}/avatar/${hash.data}?s=128`;
+            url.innerText = url.href = `${origin}/avatar/${hash.data}?s=128`;
         }
         document.getElementById('avatar-email').addEventListener('blur', emailChangedHandler);
+        // gh
+        document.getElementById('this-site-gh-origin').innerText = `${window.location.origin}/gh/`;
+        const ghGo = () => {
+            const input = document.getElementById('gh-mirror-input');
+            const url = input.value;
+            if (url) {
+                window.open(`${window.location.origin}/gh/${url}`);
+            } else {
+                alert('请输入链接');
+            }
+        }
+        document.getElementById('gh-mirror-btn').addEventListener('click', ghGo);
     </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 declare global {
-    const UrlShorten: KVNamespace;
+    const UrlShorten: KVNamespace | null;
 }
 
 export async function onRequest(context) {
@@ -11,6 +11,10 @@ export async function onRequest(context) {
     } = context;
 
     const url = new URL(request.url);
+
+    if (!env.UrlShorten) { // If the KV namespace is not bound to the script unluckily
+        return env.ASSETS.fetch(request);
+    }
 
     const value = await env.UrlShorten.get(url.pathname);
 
