@@ -9,6 +9,12 @@ Add it to KV like:
 
 | Key | Value |
 | --- | --- |
-| path | real url |
-| /orangii | https://orangii.cn |
-| /more | https://example.org |
+| **path** | **real url** |
+| [`/blog`](https://cz.cyou/blog) | https://blog.orangii.cn |
+| `/more` | https://example.org |
+
+## Gravatar Proxy Supported
+Check this out:
+
+![Gravatar](https://cz.cyou/avatar/02e96d02a7364a53f44168f4beb7067c)
+https://cz.cyou/avatar/02e96d02a7364a53f44168f4beb7067c

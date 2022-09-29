@@ -1,0 +1,18 @@
+{
+  "name": "cloudflare-pages-urlshorten",
+  "version": "1.0.0",
+  "description": "A URL Shortener based on Cloudflare pages",
+  "author": {
+    "name": "Orangii | 橙梓",
+    "email": "me@orangii.cn",
+    "url": "https://orangii.cn/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.8.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.16.0",
+    "wrangler": "^2.1.8"
+  }
+}
