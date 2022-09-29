@@ -5,7 +5,26 @@ Bind this Worker KV in your Pages project in `Settings > Functions > KV namespac
 Done
 
 ## Deploy
-// TODO
+### Deploy settings
+| Setting | Value |
+| -- | -- |
+| Build command | `npm run build` |
+| Build output directory | `/dist` |
+| Root directory | `/` |
+
+### Environment variables (recommended)
+You could use any node version later than 16.
+| Variable name | Value |
+| -- | -- |
+| NODE_VERSION | `16.17.1` |
+
+### Functions (necessary)
+I assume you have created a [KV namespace](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) for this Pages project.
+| Variable name | KV namespace |
+| -- | -- |
+| UrlShorten | _the one you created_ |
+
+Other settings are not necessary.
 
 ## Add a path
 Add it to KV like:
@@ -29,4 +48,7 @@ Test with this README.md
 - Mirror: [https://cz.cyou/**gh/https://raw.githubusercontent.com/Jiaocz/CloudFlare-Pages-UrlShorten/feat/functions-dir/README.md**](https://cz.cyou/gh/https://raw.githubusercontent.com/Jiaocz/CloudFlare-Pages-UrlShorten/feat/functions-dir/README.md)
 
 Just add origin link to cz.cyou (or your deployed instance).
-`https://cz.cyou${origin_link}`
+`https://cz.cyou/gh/${origin_link}`
+
+## Credits
+Github Mirror function from [hunshcn/gh-proxy](https://github.com/hunshcn/gh-proxy)
