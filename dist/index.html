@@ -10,13 +10,13 @@
 </head>
 <body class="w-full bg-gray-100">
     <header class="w-full mt-36 mb-10 text-center" id="site-header">
-        <h1 class="tracking-widest font-bold sm:text-5xl sm:tracking-wider lg:text-7xl lg:tracking-widest xl:text-8xl">
+        <h1 class="font-bold text-5xl tracking-wider lg:text-7xl lg:tracking-widest xl:text-8xl">
             一个<span class="rainbow border-b-4 border-b-orange-200">多功能</span>的URL短链工具
         </h1>
-        <p class="mt-6 tracking-wider sm:text-lg lg:text-xl xl:text-2xl">无跟踪 / 基于 Cloudflare Pages / 多种功能</p>
+        <p class="mt-6 tracking-wider text-lg lg:text-xl xl:text-2xl">无跟踪 / 基于 Cloudflare Pages / 多种功能</p>
     </header>
     <section class="w-max max-w-full bg-red-100 mx-auto py-3 px-6 rounded-lg text-gray-700 my-16 font-thin">
-        <p class="tracking-wide sm:text-xs lg:text-lg"><strong class="font-bold">提示：</strong>如果你没有刻意访问本页面，那么你很可能是访问了错误的URL，来到了默认的首页。</p>
+        <p class="tracking-wide text-xs lg:text-lg"><strong class="font-bold">提示：</strong>如果你没有刻意访问本页面，那么你可能是访问了错误的URL，来到了默认的首页。</p>
     </section>
     <main class="w-5/6 bg-white rounded-xl mt-28 mb-10 mx-auto p-10 shadow-lg">
         <section id="gravatar-mirror" class="mb-16">
@@ -25,26 +25,26 @@
                 使用 <code id="this-site-gravatar-origin">本站域名/avatar</code> 替换 <code>https://www.gravatar.com/avatar/</code> 即可，其他参数均可保留。
             </p>
 
-            <section class="card flex lg:flex-row sm:flex-col">
+            <section class="card flex lg:flex-row flex-col">
                 <img
                     src="/avatar/02e96d02a7364a53f44168f4beb7067c?s=128"
                     alt="Gravatar"
-                    class="rounded-full w-20 h-20 mr-6 flex-none sm:mb-4"
+                    class="rounded-full w-20 h-20 mr-6 flex-none mb-4"
                     id="gravatar-mirror-img"
                 />
                 <div class="flex-1 flex flex-col">
                     <h3 class="text-lg font-bold mb-4">头像预览</h3>
-                    <p class="sm:w-full">
+                    <p class="w-full">
                         <span>邮箱：</span>
                         <input
                             value="me@orangii.cn"
                             placeholder="请输入邮箱"
                             type="email"
-                            class="sm:w-2/3 lg:w-[300px] border-b-2 focus:border-0 focus:ring-2 focus:rounded box-border ring-orange-400 outline-0 border-b-gray-300 active:ring-2 mb-4"
+                            class="w-2/3 lg:w-[300px] border-b-2 focus:border-0 focus:ring-2 focus:rounded box-border ring-orange-400 outline-0 border-b-gray-300 active:ring-2 mb-4"
                             id="avatar-email"
                         />
                     </p>
-                    <p class="text-gray-400 overflow-hidden whitespace-nowrap text-ellipsis sm:w-full lg:w-[350px]">
+                    <p class="text-gray-400 overflow-hidden whitespace-nowrap text-ellipsis w-full lg:w-[350px]">
                         镜像地址：
                         <a
                             id="gravatar-img-link"
@@ -65,10 +65,10 @@
             <p class="text-gray-600">
                 将资源地址粘贴倒 <code id="this-site-gh-origin">本站域名/gh/</code> 后打开即可使用。
             </p>
-            
+
             <section class="card">
                 <h3 class="text-xl font-bold mb-4">输入链接体验效果体验</h3>
-                <div class="flex flex-row gap-2 lg:mb-2 sm:mb-3">
+                <div class="flex flex-row gap-2 lg:mb-2 mb-3">
                     <input
                         id="gh-mirror-input"
                         class="box-border w-full border-b-2 border-b-gray-300 focus:border-0 focus:rounded focus:ring-2 ring-orange-400 outline-0"
@@ -108,7 +108,7 @@
             </section>
         </section>
     </main>
-    <footer class="mb-10 text-gray-400 text-center sm:text-xs lg:text-base">
+    <footer class="mb-10 text-gray-400 text-center text-xs lg:text-base">
         Copyright &copy; 2022 <a href="https://orangii.cn" rel="noopener noreferrer">Orangii</a> 
         | <a href="https://github.com/Jiaocz/CloudFlare-Pages-UrlShorten" target="_blank" rel="noopener noreferrer">Jiaocz/CloudFlare-Pages-UrlShorten</a>
     </footer>
