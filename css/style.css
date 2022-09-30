@@ -31,3 +31,9 @@ code {
     @apply mx-auto rounded-xl shadow-md p-10 mt-6;
     @apply sm:w-full lg:w-[640px];
 }
+
+.star-badge {
+    @apply absolute z-10 xl:-top-3 xl:-right-4 lg:-top-4 lg:-right-6 -top-3 -right-0 shadow-sm bg-white bg-opacity-60 backdrop-blur-sm rounded-lg px-2 py-1 lg:px-4 lg:py-3;
+    @apply flex flex-row gap-2;
+    @apply text-sm tracking-wide;
+}
