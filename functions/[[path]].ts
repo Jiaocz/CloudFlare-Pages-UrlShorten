@@ -24,7 +24,7 @@ export async function onRequest(context) {
 
     try {
         const redirect = new URL(value);
-        return new Response("Redirecting", { status: 301, headers: { Location: redirect.href } });
+        return Response.redirect(redirect.href, 301);
     } catch (e) {
         return new Response("Invalid URL", { status: 400 });
     }
