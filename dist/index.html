@@ -11,7 +11,7 @@
     <header class="w-full mt-36 mb-10 text-center" id="site-header">
         <h1 class="mx-auto relative max-w-max w-full font-bold text-5xl tracking-wider lg:text-7xl lg:tracking-widest xl:text-8xl">
             一个<span class="rainbow border-b-4 border-b-orange-200">多功能</span>的URL短链工具
-            <span class="star-badge"><span>⭐</span> <a id="star-count" href="https://github.com/Jiaocz/CloudFlare-Pages-UrlShorten" target="_blank" rel="noopener noreferer">···</a></span>
+            <span id="star-badge" class="star-badge"><span>⭐</span> <span id="star-count">···</span></span>
         </h1>
         <p class="mt-6 tracking-wider text-lg lg:text-xl xl:text-2xl">无跟踪 / 基于 Cloudflare Pages / 多种功能</p>
     </header>
@@ -118,6 +118,7 @@
     <script>
         // Star Count
         axios.get('https://api.github.com/repos/Jiaocz/CloudFlare-Pages-UrlShorten').then(res => document.getElementById('star-count').innerText = res.data.stargazers_count);
+        document.getElementById('star-badge').addEventListener('click', () => { window.open("https://github.com/Jiaocz/CloudFlare-Pages-UrlShorten", '_blank', 'noopener,noreferrer'); });
         // Gravatar 镜像
         document.getElementById('this-site-gravatar-origin').innerText = `${window.location.origin}/avatar/`;
         // 头像
