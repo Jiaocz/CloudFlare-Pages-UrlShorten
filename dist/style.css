@@ -790,6 +790,7 @@ code {
 
 .star-badge {
   position: absolute;
+  cursor: pointer;
   top: -0.75rem;
   right: -0px;
   z-index: 10;
