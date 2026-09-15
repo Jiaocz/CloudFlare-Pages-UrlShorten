@@ -53,7 +53,7 @@ Just add origin link to cz.cyou (or your deployed instance).
 ## Nextcloud App Store Mirror
 
 The Pages Function at `/nextcloud-appstore/` proxies the official Nextcloud App
-Store API and rewrites GitHub release downloads to the existing `/gh/` mirror.
+Store API and GitHub release downloads through a dedicated streaming endpoint.
 Both the app list and the installation packages therefore use the Pages domain.
 
 Set the App Store URL on your Nextcloud server (replace `cz.cyou` with your
@@ -71,9 +71,10 @@ sudo -u www-data php occ config:system:set appstoreurl \
   --value="https://apps.nextcloud.com/api/v1"
 ```
 
-Only `apps.json` and `categories.json` are exposed. Metadata responses are
-cached for one hour by shared caches; application signatures are left untouched
-and continue to be verified by Nextcloud after download.
+Only `apps.json`, `categories.json`, `discover.json`, and validated GitHub
+release downloads are exposed. Metadata responses are cached for one hour;
+application signatures are left untouched and continue to be verified by
+Nextcloud after download.
 
 ## Credits
 Github Mirror function from [hunshcn/gh-proxy](https://github.com/hunshcn/gh-proxy)
