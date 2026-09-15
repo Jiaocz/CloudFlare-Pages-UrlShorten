@@ -5,6 +5,7 @@ const CACHE_TTL_SECONDS = 3600;
 const ALLOWED_ENDPOINTS = new Set([
     'apps.json',
     'categories.json',
+    'discover.json',
 ]);
 
 function getPath(params: { path?: string | string[] }): string {
@@ -37,7 +38,9 @@ function proxyGithubDownloads(value: unknown, proxyOrigin: string): unknown {
             try {
                 const downloadUrl = new URL(entry);
                 if (downloadUrl.protocol === 'https:' && downloadUrl.hostname === 'github.com') {
-                    result[key] = `${proxyOrigin}/gh/${downloadUrl.href}`;
+                    const proxyUrl = new URL('/nextcloud-appstore/download', proxyOrigin);
+                    proxyUrl.searchParams.set('url', downloadUrl.href);
+                    result[key] = proxyUrl.href;
                     continue;
                 }
             } catch {
@@ -49,6 +52,55 @@ function proxyGithubDownloads(value: unknown, proxyOrigin: string): unknown {
     }
 
     return result;
+}
+
+function isAllowedDownload(url: URL): boolean {
+    return url.protocol === 'https:'
+        && url.hostname === 'github.com'
+        && /^\/[^/]+\/[^/]+\/releases\/download\//.test(url.pathname);
+}
+
+async function fetchDownload(request: Request): Promise<Response> {
+    const requestUrl = new URL(request.url);
+    const target = requestUrl.searchParams.get('url');
+
+    if (target === null) {
+        return jsonError('Missing download URL', 400);
+    }
+
+    let downloadUrl: URL;
+    try {
+        downloadUrl = new URL(target);
+    } catch {
+        return jsonError('Invalid download URL', 400);
+    }
+
+    if (!isAllowedDownload(downloadUrl)) {
+        return jsonError('Download URL is not allowed', 403);
+    }
+
+    const headers = new Headers();
+    for (const name of ['accept', 'if-modified-since', 'if-none-match', 'range', 'user-agent']) {
+        const value = request.headers.get(name);
+        if (value !== null) {
+            headers.set(name, value);
+        }
+    }
+
+    const upstream = await fetch(downloadUrl.href, {
+        method: request.method,
+        headers,
+        redirect: 'follow',
+    });
+
+    const responseHeaders = new Headers(upstream.headers);
+    responseHeaders.set('x-nextcloud-appstore-proxy', 'cloudflare-pages');
+
+    return new Response(request.method === 'HEAD' ? null : upstream.body, {
+        status: upstream.status,
+        statusText: upstream.statusText,
+        headers: responseHeaders,
+    });
 }
 
 async function fetchEndpoint(request: Request, endpoint: string): Promise<Response> {
@@ -74,7 +126,7 @@ async function fetchEndpoint(request: Request, endpoint: string): Promise<Respon
     responseHeaders.set('cache-control', `public, max-age=${CACHE_TTL_SECONDS}`);
     responseHeaders.set('x-nextcloud-appstore-proxy', 'cloudflare-pages');
 
-    if (endpoint !== 'apps.json' || request.method === 'HEAD' || !upstream.ok) {
+    if (request.method === 'HEAD' || !upstream.ok) {
         return new Response(request.method === 'HEAD' ? null : upstream.body, {
             status: upstream.status,
             statusText: upstream.statusText,
@@ -117,6 +169,14 @@ export async function onRequest(context): Promise<Response> {
     }
 
     const endpoint = getPath(params);
+    if (endpoint === 'download') {
+        try {
+            return await fetchDownload(request);
+        } catch {
+            return jsonError('Unable to download the Nextcloud app', 502);
+        }
+    }
+
     if (!ALLOWED_ENDPOINTS.has(endpoint)) {
         return jsonError('Unknown Nextcloud App Store endpoint', 404);
     }
