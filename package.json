@@ -13,6 +13,7 @@
     "build": "postcss css/style.css -o dist/style.css"
   },
   "license": "MIT",
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "md5": "^2.3.0"
   },
